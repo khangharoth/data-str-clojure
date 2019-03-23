@@ -1,7 +1,15 @@
 (ns data-str-clojure.core
-  (:gen-class))
+  (:gen-class)
+  (:require [dk.ative.docjure.spreadsheet :as spreadsheet]))
+
+
+
+(defn read-rows []
+  (->>
+    (spreadsheet/load-workbook "resources/feb2019.XLS")
+    (spreadsheet/select-sheet "NEFT")
+    (spreadsheet/select-columns {:C :bankName :D :numOfTransaction})))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (println type (read-rows)))
