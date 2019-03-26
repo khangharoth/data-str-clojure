@@ -17,10 +17,12 @@
               :color {:field "item" :type "nominal"}}
    :mark     "line"})
 
+(println "about to plot")
+(Thread/sleep 5000)
 ;; Render the plot
 (oz/v! line-plot)
 
 
 (defn -main
   [& args]
-  (while true (oz/v! line-plot)))
+  (while true (Thread/sleep 5000)))
