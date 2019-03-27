@@ -5,15 +5,18 @@
 
 
 
+
 (defn read-rows [file-name]
   (->>
     (spreadsheet/load-workbook (str "resources/" file-name))
     (spreadsheet/select-sheet "NEFT")
     (spreadsheet/select-columns {:C :bankName :D :numOfTransaction})))
 
-(defn valid-row? [col]
-  (and (not (nil? (:bankName col)))
-       (not (= "BANK" (str (:bankName col))))
+(defn valid-row? [row]
+  (and (not (nil? (:bankName row)))
+       (not (= "BANK" (str (:bankName row))))
+       (number? (:numOfTransaction row))
+       (> (:numOfTransaction row) 10000000)
        )
   )
 
@@ -22,6 +25,8 @@
     (read-rows file-name)
     (rest)
     (filter valid-row?)))
+
+
 
 (defn -main
   [& args]
