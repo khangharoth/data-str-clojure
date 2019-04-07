@@ -16,18 +16,25 @@
   (and (not (nil? (:bankName row)))
        (not (= "BANK" (str (:bankName row))))
        (number? (:numOfTransaction row))
-       (> (:numOfTransaction row) 10000000)
+       (> (:numOfTransaction row) 5000000)
        )
   )
+
+(defn in-million [row]
+  {:bankName (:bankName row) :numOfTransaction (/ (:numOfTransaction row) 1000000)}
+  )
+
 
 (defn all-valid-rows [file-name]
   (->>
     (read-rows file-name)
     (rest)
-    (filter valid-row?)))
+    (filter valid-row?)
+    (map in-million)))
 
 
 
 (defn -main
   [& args]
-  (println (doall (sort-by last (drop-last (all-valid-rows "feb2019.XLS"))))))
+  (println (doall (sort-by last (drop-last (all-valid-rows "feb2019.XLS")))))
+  )

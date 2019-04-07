@@ -9,7 +9,11 @@
     (spreadsheet/select-sheet "NEFT")
     (spreadsheet/select-columns {:C :bankName :D :numOfTransaction})))
 
+(defn in-million [row]
+  (println (first row))
+  )
+
 
 (defn -main
   [& args]
-  (println (read-rows "feb2019.XLS")))
+  (in-million (read-rows "feb2019.XLS")))
