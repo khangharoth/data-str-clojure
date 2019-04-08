@@ -16,7 +16,7 @@
   )
 
 (defn play-data [& names]
-  (for [n names i (range 20)]
+  (for [n names i (range 3)]
     {:time i :item n :quantity (* (coeff n) i)}))
 
 (def line-plot
