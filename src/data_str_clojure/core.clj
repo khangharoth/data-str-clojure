@@ -7,11 +7,10 @@
 
 
 (defn read-rows [file-name]
-  (println file-name)
   (->>
     (spreadsheet/load-workbook (str "resources/" file-name))
     (spreadsheet/select-sheet "NEFT")
-    (spreadsheet/select-columns {:file-name file-name :C :bankName :D :numOfTransaction})))
+    (spreadsheet/select-columns {:C :bankName :D :numOfTransaction})))
 
 (defn valid-row? [row]
   (and (not (nil? (:bankName row)))
@@ -22,8 +21,7 @@
   )
 
 (defn in-million [row]
-  (println row)
-  {:file-name (:file-name row) :bankName (:bankName row) :numOfTransaction (/ (:numOfTransaction row) 1000000)}
+  {:bankName (:bankName row) :tranInMil (/ (:numOfTransaction row) 1000000)}
   )
 
 
@@ -34,9 +32,14 @@
     (filter valid-row?)
     (map in-million)))
 
+(defn data-by-month [file-name]
+  {:month file-name :data (doall (sort-by last (drop-last (all-valid-rows file-name))))}
+  )
+
 
 
 (defn -main
   [& args]
-  (println (doall (sort-by last (drop-last (all-valid-rows "feb2019.XLS")))))
+  (println (data-by-month "feb2019.XLS"))
+  (println (data-by-month "jan2019.XLS"))
   )
