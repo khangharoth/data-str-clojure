@@ -16,7 +16,7 @@
   (and (not (nil? (:bankName row)))
        (not (= "BANK" (str (:bankName row))))
        (number? (:numOfTransaction row))
-       (> (:numOfTransaction row) 5000000)
+       (> (:numOfTransaction row) 10000000)
        )
   )
 
@@ -40,6 +40,8 @@
 
 (defn -main
   [& args]
+  (println (data-by-month "dec2018.XLS"))
   (println (data-by-month "feb2019.XLS"))
   (println (data-by-month "jan2019.XLS"))
+
   )
